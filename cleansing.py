@@ -1,4 +1,4 @@
-import pandas, re, os
+import pandas, re, os, datetime
 # Navigation to the log file folder
 curDir = os.getcwd()
 sourceDir = curDir[:curDir.rindex("\\")] + "\\Log files"
@@ -21,8 +21,11 @@ for file in listFile:
     for row in range(len(data)):
         # Split the time and date from TIME field
         text = str(data.iloc[row, cols.index('Time')]).split(',')
-        data.loc[row, 'Date'] = text[0]
-        data.loc[row, 'Time'] = text[1]
+        date = text[0].split("/")
+        # data.loc[row, 'Date'] = datetime.date(datetime.date.today().year, int(date[1].strip()), int(date[0].strip()))
+        time = text[1].split(":")
+        # data.loc[row, 'Time'] = datetime.time(int(time[0].strip()), int(time[1].strip()))
+        data.loc[row, "Time"] = datetime.datetime(datetime.date.today().year, int(date[1].strip()), int(date[0].strip()), int(time[0].strip()), int(time[1].strip()))
         
         # Search for the student' ID
         name = data.iloc[row, cols.index('User full name')]
@@ -35,12 +38,12 @@ for file in listFile:
             if len(lst) < 3:
                 start = name.index(" ")
                 end = name.rindex(" ")
-                data.loc[row, "Name"] = name[start : end].strip()
+                data.loc[row, "Name"] = str(name[start : end].strip())
             else:
-                data.loc[row, "Name"] = lst[1].strip()
+                data.loc[row, "Name"] = str(lst[1].strip())
         else:
-            data.loc[row, "Name"] = name
-
+            data.loc[row, "ID"] = pandas.NA
+            data.loc[row, "Name"] = str(name)
 
         if data.loc[row, "Component"] == "Assignment":
             data.loc[row, "Object"] = str(data.loc[row, "Event context"]).split("-")[-1]
@@ -49,5 +52,6 @@ for file in listFile:
 
     data = data.drop(columns=['User full name', 'Affected user', 'Description', 'Origin', 'IP address', 'Event context'])
 
-    data = data[['Date']+['Time']+['ID']+['Name']+['Component']+['Event name']+['Object']]
+    data = data[['Time']+['ID']+['Name']+['Component']+['Event name']+['Object']]
+    data = data.astype({"Time" : "datetime64"})
     data.to_csv(desDir + "\\" + file, index=False)
