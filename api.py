@@ -7,10 +7,15 @@ api.config["DEBUG"] = True
 
 @api.route('/find', methods=["GET"])
 def find():
-    return jsonify(functions.findbyAttr(request))
+    return functions.findbyAttr(request)
 
 @api.route('/stat', methods=["GET"])
 def stat():
-    return jsonify(functions.statbyComponent(request))
+    return functions.statbyComponent(request)
+
+@api.route('/score', methods=["GET"])
+def score():
+    return jsonify(functions.score())
+
 
 api.run()
