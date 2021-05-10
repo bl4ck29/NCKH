@@ -6,20 +6,30 @@ from MongoConnection import ConnectToMongo
 
 import pandas
 
-data = pandas.DataFrame(ConnectToMongo.connect("mongodb+srv://bl4ck_29:Matkhau1234@cluster0.otjrb.azure.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"))
+conn = ConnectToMongo.Connect("mongodb+srv://bl4ck_29:Matkhau1234@cluster0.otjrb.azure.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", "NCKH", "DTH0080-1600817-HK1_2020-2021_20210303-0907")
+data = pandas.DataFrame(conn.connect(index=False))
 data = data.astype({"Time" : "datetime64"})
 
-def findbyAttr(request):
-    query = [True, True, True, True]
-    if "id" in request.args:
-        query[0] = (data["ID"]== str(request.args["id"]).upper())
-    if "name" in request.args:
-        query[1] =  (data["Name"]== str(request.args["name"]))
-    if "event" in request.args:
-        query[2] =  (data["Event name"]== str(request.args["event"]))
-    if "component" in request.args:
-        query[3] =  (data["Component"]== str(request.args["component"]))
-    return data.loc[query[0] & query[1] & query[2] & query[3]].to_json(orient="values")
+def listCollections():
+    return (conn.list())
+
+def findbyAttr(query):
+    query = query.split("&")
+    res = {}
+    for item in query:
+        item = item.split("=")
+        res[item[0]] = item[1].strip()
+
+    ret = [True, True, True, True]
+    if "id" in res:
+        ret[0] = (data["ID"]== res["id"])
+    if "name" in res:
+        ret[1] =  (data["Name"]== str(res["name"]))
+    if "event" in res:
+        ret[2] =  (data["Event name"]== str(res["event"]))
+    if "component" in res:
+        ret[3] =  (data["Component"]== str(res["component"]))
+    return data.loc[ret[0] & ret[1] & ret[2] & ret[3]].to_json(orient="values", default_handler=str)
 
 def statbyComponent(request):
     if "component" in request.args:
@@ -53,7 +63,8 @@ def score():
             dct[id] = {}
 
     standard = data["Event name"].unique().tolist()
-    dct.pop("")
+    if "nan" in dct:
+        dct.pop("nan")
     for key, value in dct.items():
         score = 0
         for k, v in value.items():
@@ -62,3 +73,10 @@ def score():
                     score += 1
         dct[key] = score
     return dct
+
+def HomePage(request):
+    functions = {
+        "List all databases and collections from MongoDB server":"http://127.0.0.1:5000/list",
+        "Scores all students according to actions":"http://127.0.0.1:5000/score"
+        }
+    return functions
