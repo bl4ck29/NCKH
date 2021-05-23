@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="This is a test HTML response for NCKH">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../static/test.css">
+        <title>Test interface for NCKH</title>
+    </head>
+
+    <body>
+        <p><h1><center id="id">QUÉO CÒM</center></h1></p><hr/>
+        <form action="http://127.0.0.1:5000/submit" method="POST">
+            <table>
+                <thead>
+                    <captions>List of functions</captions>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Query</th>
+                        <th scope="col">Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="collections">Select your collection</label>
+                        </td>
+                        <td>
+                            <input list="collections" name="colName">
+                            <datalist id="collections">
+                                {% for ind in collections %}
+                                <option value={{ind}}>{{ind}}</option>
+                                {% endfor %}
+                            </datalist>
+                        </td>
+                        <td>
+                            <input type="submit" value="Select">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Score all the student in collection</td>
+                        <td>None</td>
+                        <td>
+                            <a href="http://127.0.0.1:5000/score" target="_blank">Click here</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </body>
+
+</html>

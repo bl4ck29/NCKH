@@ -42,7 +42,7 @@ for file in listFile:
             else:
                 data.loc[row, "Name"] = str(lst[1].strip())
         else:
-            data.loc[row, "ID"] = pandas.NA
+            data.loc[row, "ID"] = pandas.NaT
             data.loc[row, "Name"] = str(name)
 
         if data.loc[row, "Component"] == "Assignment":
@@ -53,5 +53,4 @@ for file in listFile:
     data = data.drop(columns=['User full name', 'Affected user', 'Description', 'Origin', 'IP address', 'Event context'])
 
     data = data[['Time']+['ID']+['Name']+['Component']+['Event name']+['Object']]
-    data = data.astype({"Time" : "datetime64"})
     data.to_csv(desDir + "\\" + file, index=False)

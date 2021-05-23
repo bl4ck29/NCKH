@@ -5,5 +5,5 @@ class request():
         self.args = {}
         self.args["id"] = "187IT23616"
 
-query = "id=197PM33774&component=System"
-print(functions.findbyAttr(query))
+query = "component=File"
+print(functions.statbyComponent(query))

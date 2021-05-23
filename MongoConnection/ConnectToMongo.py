@@ -1,5 +1,5 @@
 import pymongo
-class Connect:
+class MongoConnect:
     def __init__(self, connectString, db, col):
         self.connection = pymongo.MongoClient(connectString)
         self.__database = db
@@ -18,6 +18,3 @@ class Connect:
         for i in db:
             dct[i] = self.connection[i].list_collection_names()
         return dct
-
-    def disconnect(self):
-        del(self.connection)

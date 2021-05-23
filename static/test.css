@@ -1,0 +1,20 @@
+.link{
+    text-decoration: none;
+    color: purple;
+}
+.link:visited{
+    color:pink;
+}
+.link:hover{
+    background-color: aqua;
+}
+h2{
+    background-color:bisque;
+}
+#id{
+    background-color: blue;
+}
+input{
+    color:steelblue;
+    background-color:darkkhaki;
+}
