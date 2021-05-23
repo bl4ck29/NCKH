@@ -1,16 +1,15 @@
-import flask, os
+import flask
 from flask import jsonify, request, redirect, url_for, render_template
-from pymongo import collection
-from pymongo.message import query
-from pymongo.mongo_client import MongoClient
-from MongoConnection import functions, ConnectToMongo
+from functions import functions
 
 api = flask.Flask(__name__)
 api.config["DEBUG"] = True
+def start():
+    api.run()
 
 @api.route('/')
 def home():
-    return render_template('test.html', collections=functions.listCollections()["NCKH"])
+    return render_template('test.html', collections = functions.listCollections())
 
 @api.route('/find<query>', methods=["GET"])
 def find(query):
@@ -27,5 +26,5 @@ def score():
 @api.route('/submit', methods=["GET", "POST"])
 def submit():
     collection = str(request.args["colName"])
-    return collections
+    return collection
 api.run()
