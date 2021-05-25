@@ -1,9 +1,9 @@
 .link{
     text-decoration: none;
-    color: purple;
+    color: darkblue;
 }
 .link:visited{
-    color:pink;
+    color:crimson;
 }
 .link:hover{
     background-color: aqua;

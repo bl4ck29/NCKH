@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="This is a test HTML response for NCKH">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../static/test.css">
+        <title>HomePage</title>
+    </head>
+
+    <body>
+        <form action="http://127.0.0.1:5000/submit" target="_blank" method="GET">
+            <label for="databases">Select data base</label>
+            <input list="databases" name="dbName">
+            <datalist id="databases">
+                {% for db in databases %}
+                <option value={{db}}>{{db}}</option>
+                {% endfor %}
+            </datalist>
+            <label for="collections">Select your collection</label>
+            <input list="collections" name="colName">
+                <datalist id="collections">
+                    {% for col in collections %}
+                    <option value={{col}} selected>{{col}}</option>
+                    {% endfor %}
+                </datalist>
+            <input type="submit">
+        </form>
+    </body>

@@ -10,44 +10,49 @@
 
     <body>
         <p><h1><center id="id">QUÉO CÒM</center></h1></p><hr/>
-        <form action="http://127.0.0.1:5000/submit" method="GET">
-            <table>
-                <thead>
-                    <captions>List of functions</captions>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Query</th>
-                        <th scope="col">Link</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
+        <table>
+            <thead>
+                <caption><center><h1>List of functions</h1></center></caption>
+                <tr>
+                    <th scope="col">Column 1</th>
+                    <th scope="col">Column 2</th>
+                    <th scope="col">Column 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Find by attributes</td>
+                    <form action="http://127.0.0.1:5000/submit" method="POST" target="_blank">
                         <td>
-                            <label for="collections">Select your collection</label>
+                            <input type="text" name="queryFind"/>
                         </td>
                         <td>
-                            <input list="collections" name="colName">
-                            <datalist id="collections">
-                                {% for ind in collections %}
-                                <option value={{ind}}>{{ind}}</option>
-                                {% endfor %}
-                            </datalist>
+                                <input type="submit"/>
                         </td>
-                        <td>
-                            <input type="submit">
-                        </td>
-                    </tr>
+                    </form>
+                </tr>
 
-                    <tr>
-                        <td>Score all the student in collection</td>
-                        <td>None</td>
+                <tr>
+                    <td>Stat by attribute</td>
+                    <form action="http://127.0.0.1:5000/submit" method="POST" target="_blank">
                         <td>
-                            <a href="http://127.0.0.1:5000/score" target="_blank">Click here</a>
+                            <input type="text" name="queryStat"/>
                         </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
+                        <td>
+                            <input type="submit"/>
+                        </td>
+                    </form>
+                </tr>
+
+                <tr>
+                    <td>Score all the student in collection</td>
+                    <td>None</td>
+                    <td>
+                        <a class="link" href="http://127.0.0.1:5000/score" target="_blank">Click here</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 
 </html>
