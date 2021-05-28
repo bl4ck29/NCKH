@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="This is a test HTML response for NCKH">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../static/test.css">
+        <title>Test interface for NCKH</title>
+    </head>
+
+    <body>
+        <table>
+            <thead>
+                <caption>Fill in each item with score</caption>
+                <tr>
+                    <th>Name</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form action="http://127.0.0.1:5000/submit" target="_blank" method="POST">
+                    <td>
+                        <td>
+                            <input type="hidden" value="Name" name="attr">
+                        </td>
+                    </td>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{item}}</td>
+                        <td>
+                            <input type="number" name={{item}}>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                            <input type="submit" name="setStandard">
+                        </td>
+                    </tr>
+                </form>
+            </tbody>
+        </table>
+        
+    </body>

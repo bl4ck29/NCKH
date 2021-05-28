@@ -5,7 +5,7 @@
         <meta name="description" content="This is a test HTML response for NCKH">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="../static/test.css">
-        <title>Test interface for NCKH</title>
+        <title>Functions</title>
     </head>
 
     <body>
@@ -45,12 +45,28 @@
                 </tr>
 
                 <tr>
-                    <td>Score all the student in collection</td>
-                    <td>None</td>
-                    <td>
-                        <a class="link" href="http://127.0.0.1:5000/score" target="_blank">Click here</a>
-                    </td>
+                    <form action="http://127.0.0.1:5000/submit" target="_blank" method="POST">
+                        <td>Score all the student in collection by attirbute</td>
+                        <td>
+                            <input type="text" name="queryScore"/>
+                        </td>
+                        <td>
+                            <input type="submit">
+                        </td>
+                    </form>
                 </tr>
+
+                <!--<tr>
+                    <form action="http://127.0.0.1:5000/submit" target="_blank" method="POST">
+                        <td>List all items in distinct</td>
+                        <td>
+                            <input type="text" name="queryList">
+                        </td>
+                        <td>
+                            <input type="submit">
+                        </td>
+                    </form>
+                </tr>-->
             </tbody>
         </table>
     </body>

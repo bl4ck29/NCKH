@@ -1,6 +1,8 @@
 .link{
     text-decoration: none;
     color: darkblue;
+    display: none;
+    visibility: hidden;
 }
 .link:visited{
     color:crimson;

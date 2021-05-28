@@ -5,7 +5,6 @@ class functions():
         self.data = pandas.DataFrame(data)
         self.data = self.data.astype({"Time" : "datetime64"})
         
-
     def cleansing(self):
         columns = list(self.data.columns)
         pat_id = '[0-9]+[A-Z]+[0-9]+'
@@ -15,9 +14,7 @@ class functions():
             # Split the time and date from TIME field
             text = str(self.data.iloc[row, columns.index('Time')]).split(',')
             date = text[0].split("/")
-            # data.loc[row, 'Date'] = datetime.date(datetime.date.today().year, int(date[1].strip()), int(date[0].strip()))
             time = text[1].split(":")
-            # data.loc[row, 'Time'] = datetime.time(int(time[0].strip()), int(time[1].strip()))
             self.data.loc[row, "Time"] = datetime.datetime(datetime.date.today().year, int(date[1].strip()), int(date[0].strip()), int(time[0].strip()), int(time[1].strip()))
             # Search for the student' ID
             name = self.data.iloc[row, columns.index('User full name')]
@@ -70,41 +67,35 @@ class functions():
         # Handle query' format
         query = query.split("&")
         result = self.data.groupby(query).count()["Time"]
-        # if "component" in query:
-        #     lstEnrolled = self.data.groupby(["Component"]).count()
-        #     # lstEnrolled = pandas.DataFrame(self.data.loc[self.data["Component"] == query]["ID"].unique())
-        # if "event" in query:
-        #     lstEnrolled = self.data.groupby(["Event name"]).count()
-        #     # lstEnrolled = pandas.DataFrame(self.data.loc[self.data["Event name"] == query]["ID"].unique(), columns=[["ID"]])
-        # if "object" in query:
-        #     lstEnrolled = self.data.groupby(["Object"]).count()
-        #     # lstEnrolled = pandas.DataFrame(self.data.loc[self.data["Object"] == query]["ID"].unique(), columns=["ID"])
         return result.to_dict()
 
-    def score(self):
-        dct = {}
-        sample = pandas.DataFrame(self.data.groupby(["ID", "Component", "Event name"]).count())
-        for row in range(len(sample)):
+    def score(self, attr, standard=None):
+        # Create variable, contains each students and their amount off attr
+        result = {}
+        for row in range(len(self.data)):
             id = str(self.data.loc[row, "ID"])
-            comp = str(self.data.loc[row, "Component"])
-            event = str(self.data.loc[row, "Event name"])
-            if id in dct:
-                if comp in dct[id]:
-                    if event not in dct[id][comp]:
-                        dct[id][comp].append(event)
-                else:
-                    dct[id][comp] = [event]
+            val = str(self.data.loc[row, attr])
+            if id in result:
+                if val not in result[id]:
+                    result[id].append(val)
             else:
-                dct[id] = {comp : [event]}
-
-        standard = self.data["Event name"].unique().tolist()
-        if "nan" in dct:
-            dct.pop("nan")
-        for key, value in dct.items():
+                result[id] = [val]
+        if "nan" in result:
+            result.pop("nan")
+        # Get standard values, all the values of the attribute if no standard was given
+        if standard == None:
+            standard = self.data[attr].unique().tolist()
+        # Score
+        for key, value in result.items():
             score = 0
-            for k, v in value.items():
-                for i in v:
-                    if i in standard:
+            for item in value:
+                if item in standard:
+                    if str(type(standard)) != "<class 'dict'>":
                         score += 1
-            dct[key] = score
-        return dct
+                    else:
+                        score += standard[item]
+            result[key] = score
+        return result
+
+    def listItem(self, attr):
+        return self.data[attr].unique().tolist()

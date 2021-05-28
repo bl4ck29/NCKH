@@ -10,13 +10,6 @@
 
     <body>
         <form action="http://127.0.0.1:5000/submit" target="_blank" method="GET">
-            <label for="databases">Select data base</label>
-            <input list="databases" name="dbName">
-            <datalist id="databases">
-                {% for db in databases %}
-                <option value={{db}}>{{db}}</option>
-                {% endfor %}
-            </datalist>
             <label for="collections">Select your collection</label>
             <input list="collections" name="colName">
                 <datalist id="collections">
