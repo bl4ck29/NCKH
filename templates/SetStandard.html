@@ -5,7 +5,7 @@
         <meta name="description" content="This is a test HTML response for NCKH">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="../static/test.css">
-        <title>Test interface for NCKH</title>
+        <title>Set standard for scoring</title>
     </head>
 
     <body>
@@ -18,23 +18,18 @@
                 </tr>
             </thead>
             <tbody>
-                <form action="http://127.0.0.1:5000/submit" target="_blank" method="POST">
-                    <td>
-                        <td>
-                            <input type="hidden" value="Name" name="attr">
-                        </td>
-                    </td>
+                <form action="http://127.0.0.1:5000/submit" method="POST">
                     {% for item in items %}
                     <tr>
                         <td>{{item}}</td>
                         <td>
-                            <input type="number" name={{item}}>
+                            <input name ={{item|string}} type="number">
                         </td>
                     </tr>
                     {% endfor %}
                     <tr>
                         <td>
-                            <input type="submit" name="setStandard">
+                            <input type="submit" name="set">
                         </td>
                     </tr>
                 </form>

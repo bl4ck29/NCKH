@@ -1,4 +1,4 @@
-import pandas, re, datetime
+import pandas, re, datetime, json
 
 class functions():
     def __init__(self, data):
@@ -15,7 +15,9 @@ class functions():
             text = str(self.data.iloc[row, columns.index('Time')]).split(',')
             date = text[0].split("/")
             time = text[1].split(":")
-            self.data.loc[row, "Time"] = datetime.datetime(datetime.date.today().year, int(date[1].strip()), int(date[0].strip()), int(time[0].strip()), int(time[1].strip()))
+            self.data.loc[row, "Time"] = datetime.datetime(
+                datetime.date.today().year, int(date[1].strip()), int(date[0].strip()), int(time[0].strip()), int(time[1].strip())
+                )
             # Search for the student' ID
             name = self.data.iloc[row, columns.index('User full name')]
             lst = name.split("-")
@@ -61,41 +63,34 @@ class functions():
             condition[3] =  (self.data["Component"]== str(res["component"]))
         return self.data.loc[condition[0] & condition[1] & condition[2] & condition[3]]
     
-    def groupbyComponent(self, query):
-        # Default
-        lstEnrolled = ["There is nothing to return here"]
+    def groupbyComponent(self, attr):
         # Handle query' format
-        query = query.split("&")
-        result = self.data.groupby(query).count()["Time"]
-        return result.to_dict()
-
-    def score(self, attr, standard=None):
-        # Create variable, contains each students and their amount off attr
-        result = {}
-        for row in range(len(self.data)):
-            id = str(self.data.loc[row, "ID"])
-            val = str(self.data.loc[row, attr])
-            if id in result:
-                if val not in result[id]:
-                    result[id].append(val)
-            else:
-                result[id] = [val]
-        if "nan" in result:
-            result.pop("nan")
-        # Get standard values, all the values of the attribute if no standard was given
-        if standard == None:
-            standard = self.data[attr].unique().tolist()
-        # Score
-        for key, value in result.items():
-            score = 0
-            for item in value:
-                if item in standard:
-                    if str(type(standard)) != "<class 'dict'>":
-                        score += 1
-                    else:
-                        score += standard[item]
-            result[key] = score
+        query = attr.split("&")
+        result = self.data.groupby(attr).count()["Time"]
         return result
 
-    def listItem(self, attr):
-        return self.data[attr].unique().tolist()
+    def score(self, standard=None):
+        lstStudent = self.data.loc[self.data["ID"].notnull()]
+        lstID = lstStudent["ID"].unique().tolist()
+        result = {}
+        for id in lstID:
+            result[str(id)] = dict(self.data.loc[self.data["ID"] == id].groupby(["Event name"]).count()["Time"])
+        for id, value in result.items():
+            sumScore = 0
+            for item, time in value.items():
+                try:
+                    time = int(time)
+                    item = item.replace(" ", "_")
+                    if item in standard:
+                        score = standard[item]
+                    else:
+                        score = 1
+                    sumScore += time * score
+                except:
+                    sumScore += 0
+            result[id] = sumScore
+        return result
+    
+    def listItem(self):
+        result = [item.replace(" ", "_") for item in self.data["Event name"].unique().tolist()]
+        return result
