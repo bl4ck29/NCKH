@@ -1,6 +1,5 @@
-import flask, pandas, json
-from flask import jsonify, request, redirect, url_for, render_template
-from werkzeug.datastructures import ImmutableMultiDict
+import flask, pandas
+from flask import request, redirect, url_for, render_template
 from functions import functions
 import ConnectToMongo
 
@@ -10,7 +9,10 @@ lstDatabase = connection.list()
 lstCollections = []
 collection = []
 ## NOT DONE: Add on more page where users can select database and collection
+
+# Create variables
 func = []
+query = None
 standard = None
 # Cleansing data
 # func.cleansing()
@@ -25,8 +27,8 @@ def home():
     lstCollections = connection.list(dbName="NCKH")
     return render_template("HomePage.html", collections = lstCollections)
 
-@api.route("/find<query>", methods=["GET"])
-def find(query):
+@api.route("/find", methods=["GET"])
+def findbyAttribute():
     return func.findbyAttribute(query).to_json(orient="values", default_handler=str)
 
 @api.route("/SetStandard", methods=["GET"])
@@ -44,15 +46,13 @@ def submit():
     if request.method == "POST":
         if"queryFind" in request.form:
             res = str(request.form["queryFind"])
-            return redirect(url_for("find", query = res))
-        elif "queryStat" in request.form:
-            res = str(request.form["queryList"])
-            return redirect(url_for("list", attr = res))
-        elif "queryScore" in request.form:
-            attr = str(request.form["querySCore"])
-            return redirect(url_for("score", lst = attr))
+            global query
+            query = res
+            return redirect(url_for("findbyAttribute"))
+
         elif "setStandard" in request.form:
             return redirect(url_for("SetStandard"))
+            
         elif "set" in request.form:
             res = dict(request.form)
             for key, value in res.items():
@@ -67,7 +67,7 @@ def submit():
     if request.method == "GET":
         if "colName" in request.args:
             colName = request.args["colName"]
-            collection = connection.getData("NCKH", colName)
+            collection = connection.getData("NCKH", colName, index=False)
             global func
             func = functions.functions(pandas.DataFrame(collection))
             return render_template("test.html")

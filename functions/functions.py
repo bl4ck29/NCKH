@@ -4,7 +4,11 @@ class functions():
     def __init__(self, data):
         self.data = pandas.DataFrame(data)
         self.data = self.data.astype({"Time" : "datetime64"})
-        
+    
+    @property
+    def data(self):
+        return self.data
+    @data.setter        
     def cleansing(self):
         columns = list(self.data.columns)
         pat_id = '[0-9]+[A-Z]+[0-9]+'
@@ -62,12 +66,6 @@ class functions():
         if "component" in res:
             condition[3] =  (self.data["Component"]== str(res["component"]))
         return self.data.loc[condition[0] & condition[1] & condition[2] & condition[3]]
-    
-    def groupbyComponent(self, attr):
-        # Handle query' format
-        query = attr.split("&")
-        result = self.data.groupby(attr).count()["Time"]
-        return result
 
     def score(self, standard=None):
         lstStudent = self.data.loc[self.data["ID"].notnull()]
@@ -94,3 +92,6 @@ class functions():
     def listItem(self):
         result = [item.replace(" ", "_") for item in self.data["Event name"].unique().tolist()]
         return result
+    
+    def GroupByAttribute(self, lstAttr):
+        return self.data.groupby(lstAttr)
