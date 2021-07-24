@@ -45,6 +45,11 @@ def ListItems():
 
 @api.route("/scores", methods=["GET"])
 def Scores():
-    return jsonify(data.Score())
+    standard = request.form
+    return jsonify(data.Score(standard= standard))
+
+@api.route("/getTeachersActivities", methods=["GET"])
+def GetTeachersActivities():
+    return data.GetTeacherActivities()
 
 api.run()

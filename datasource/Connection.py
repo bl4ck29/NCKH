@@ -1,4 +1,3 @@
-from os import path
 import pymongo
 
 class Connection:
@@ -20,7 +19,7 @@ class Connection:
                 result[db] = self.data[db].list_collection_names()
             return result
         else:
-            raise "Connection is not provding list method"
+            raise "Connection is not supported list method"
 
     def LoadData(self, col=None, db="NCKH"):
         if self.connectMethod == "connectionString":
