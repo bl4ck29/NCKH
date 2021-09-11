@@ -29,11 +29,16 @@ def Cleansing(row):
 
 
 
-config = {"host":"localhost", "user":"root", "password":"Matkhau@1234", "database":"LogFiles"}
+config = {"host":"54.251.188.26", "user":"nckh", "password":"Matkhau1234", "database":"LogFile"}
 connection = mysql.connector.connect(**config)
 cursor = connection.cursor()
 
-PATH = "/home/bl4ck29/Downloads/RawLogFiles/"
+# Use for linux
+# PATH = "/home/bl4ck29/Downloads/RawLogFiles/"
+
+# Use for windows
+PATH = "D:/NCKH/RawLogFiles/"
+os.chdir(PATH)
 
 LISTFILE = os.listdir()
 for name in LISTFILE:
@@ -41,7 +46,7 @@ for name in LISTFILE:
     
     FILENAME = name.replace("-", "_").replace(".csv", "")
     
-    queryCreateTable = "create table " + FILENAME + " (Time timestamp, ID char(10), Name varchar(50), Course text, Component char(20), Event text)"
+    queryCreateTable = "create table " + FILENAME + " (Time timestamp, ID char(10), Name varchar(50), Course text, Component char(50), Event text)"
     cursor.execute(queryCreateTable)
     connection.commit()
     
@@ -51,5 +56,6 @@ for name in LISTFILE:
         result = Cleansing(row)
         cursor.execute(queryInsert, result)
         connection.commit()
+    print(name + '- DONE')
 cursor.close()
 connection.close()
