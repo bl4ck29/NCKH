@@ -1,0 +1,71 @@
+ {% extends 'index.html'%} {% block content %}
+<form action="http://127.0.0.1:5000/submit" method="POST">
+    <label for="object">Select CourseID: </label>
+    <select name="filename">
+        {% for obj in lstCourseID %}
+        <option value={{obj}}>{{obj}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit">
+</form>
+
+<a href="/homepage?obj=visualization">
+    <div class="card">
+        <div>
+            <img src="../static/ComponentPieChart.jpeg" alt="PieChart" class="card-image" />
+        </div>
+        <div class="card-container">
+            <h2><b>Trực quan hóa các hoạt động của sinh viên</b></h2>
+            <p>Thống kê các hoạt động của sinh viên, của khóa học được ghi nhận trong các log file, chuyển chúng thành các biểu đồ cho khả năng đọc hiểu cao hơn.</p>
+        </div>
+    </div>
+</a>
+
+<a href="/setstandard">
+    <div class="card">
+        <div>
+            <img src="../static/ComponentPieChart.jpeg" alt="ScoreTable" class="card-image" />
+        </div>
+        <div class="card-container">
+            <h2><b>Đánh giá và cho điểm các hoạt động</b></h2>
+            <p>Dựa trên thang điểm giảng viên cung cấp để đánh giá và xếp hạng sinh viên, góp phần thực hiện các cảnh cáo học tập và các thông báo cần thiết.</p>
+        </div>
+    </div>
+</a>
+
+<a href="/homepage?obj=overview">
+    <div class="card">
+        <div>
+            <img src="../static/ComponentPieChart.jpeg" alt="ScoreTable" class="card-image" />
+        </div>
+        <div class="card-container">
+            <h2><b>Chi tiết các các hoạt động</b></h2>
+            <p>Dựa trên thang điểm giảng viên cung cấp để đánh giá và xếp hạng sinh viên, góp phần thực hiện các cảnh cáo học tập và các thông báo cần thiết. Đây là òng rất dài để kiểm tra việc xuống dòng trên màn hình</p>
+        </div>
+    </div>
+</a>
+
+<a href="/homepage?obj=process">
+    <div class="card">
+        <div>
+            <img src="../static/ComponentPieChart.jpeg" alt="ScoreTable" class="card-image" />
+        </div>
+        <div class="card-container">
+            <h2><b>Quá trình thực hiện</b></h2>
+            <p>Dựa trên thang điểm giảng viên cung cấp để đánh giá và xếp hạng sinh viên, góp phần thực hiện các cảnh cáo học tập và các thông báo cần thiết.</p>
+        </div>
+    </div>
+</a>
+
+<a href="#">
+    <div class="card">
+        <div>
+            <img src="../static/ComponentPieChart.jpeg" alt="ScoreTable" class="card-image" />
+        </div>
+        <div class="card-container">
+            <h2><b>Tài liệu báo cáo</b></h2>
+            <p>Dựa trên thang điểm giảng viên cung cấp để đánh giá và xếp hạng sinh viên, góp phần thực hiện các cảnh cáo học tập và các thông báo cần thiết.</p>
+        </div>
+    </div>
+</a>
+{% endblock %}

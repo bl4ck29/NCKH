@@ -1,0 +1,28 @@
+{% extends 'index.html' %} {% block content %}
+<table>
+    <thead>
+        <caption>Fill in each item with score</caption>
+        <tr>
+            <th>Name</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        <form action="http://127.0.0.1:5000/submit" method="POST">
+            {% for item in items %}
+            <tr>
+                <td>{{item}}</td>
+                <td>
+                    <input name={{item|string}} type="number">
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                    <input type="submit" name="setstandard">
+                </td>
+            </tr>
+        </form>
+    </tbody>
+</table>
+{% endblock %}

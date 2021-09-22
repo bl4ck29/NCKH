@@ -1,0 +1,9 @@
+Giai đoạn 1: Khảo sát hiện trạng trang E-learning của Trường Đại học Văn Lang và một số trường đại học khác dùng phần mềm tương tự.
+---
+Giai đoạn 2: Thu thập dữ liệu, lưu trữ và làm sạch dữ liệu từ các bản ghi nhật ký (log files)
+
+- Tập hợp các tập tin nhật ký giảng dạy của 10 môn học trên trang Elearning.
+
+- Nghiên cứu giải pháp trích xuất và lưu trữ dữ liệu trong Cơ sở dữ liệu phi cấu trúc MongoDB
+
+- Làm sạch dữ liệu để đảm bảo kết quả phân tích được chính xác.

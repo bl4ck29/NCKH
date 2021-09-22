@@ -1,0 +1,9 @@
+<form action="http://127.0.0.1:5000/submit" method="POST">
+    <label for="object">Select object: </label>
+    <select name="filter">
+        {% for obj in lstObj %}
+        <option value={{obj}} selected>{{obj}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit">
+</form>
