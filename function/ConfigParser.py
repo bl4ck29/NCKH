@@ -1,4 +1,4 @@
-import configparser, os
+import configparser
 
 parser = configparser.ConfigParser()
 parser.read("D:/NCKH/NCKH_PluginMoodle/config.cfg")
