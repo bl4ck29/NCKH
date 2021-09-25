@@ -9,15 +9,15 @@ from function.ChartData import ChartData
 apiMain = flask.Flask(__name__)
 apiMain.config["DEBUG"] = True
 
-PATH_LogFile = ConfigParser.Get("PATH", "LogFile")
-os.chdir(PATH_LogFile)
-LISTFILENAME = list(filter(lambda x: ".csv" in x, list(os.listdir())))
-
 data = None
-
+PATH_LogFile = None
 
 @apiMain.route("/", methods=["GET"])
 def Home():
+    global PATH_LogFile
+    PATH_LogFile = ConfigParser.Get("PATH", "LogFile")
+    os.chdir(PATH_LogFile)
+    LISTFILENAME = list(filter(lambda x: ".csv" in x, list(os.listdir())))
     # return render_template("HomePage.html", content="", lstCourseID=LISTFILENAME)
     return render_template("StartPage.html", lstObj = LISTFILENAME)
 
