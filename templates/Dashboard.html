@@ -2,19 +2,21 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="./style.css">
     <title>Nghiên cứu khoa học sinh viên</title>
 </head>
 
 <body>
     <section class="overview">
-        <div class="pie-chart">
-            <img src="{{url_for('static', filename=imgname)}}" alt="OverviewPieChart">
-        </div>
-        <div class="course-info">
-            {{course_info|safe}}
+        <div style="display: flex;">
+            <div class="pie-chart">
+                <img src="{{url_for('static', filename=imgname)}}" alt="OverviewPieChart">
+            </div>
+            <div class="course-info">
+                {{course_info|safe}}
+            </div>
         </div>
         <div class="student">
             <form action="http://127.0.0.1:5000/submit" method="POST">
@@ -31,11 +33,6 @@
 
     <section class="detail">
         <table>
-            <thead>
-                <td>FILE</td>
-                <td>ASSIGNMENT</td>
-                <td>QUIZ</td>
-            </thead>
             <tbody>
                 <tr class="info">
                     {{info|safe}}

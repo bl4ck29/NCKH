@@ -1,12 +1,12 @@
 def RenderHTMLTable(dctTableBody, lstTableHead):
     tableHeadHTML = "<thead><tr>"
     for label in lstTableHead:
-        tableHeadHTML += "<td>%s</td>" % (label)
+        tableHeadHTML += "<td><h3>%s</h3></td>" % (label)
     tableHeadHTML += "</tr></thead>"
 
     tableBodyHTML = "<tbody>"
     for key, value in dctTableBody.items():
-        tableBodyHTML += "<tr><td class='stick-col'>%s</td>"%(key)
+        tableBodyHTML += "<tr><td>%s</td>"%(key)
         for i in value:
             if i:
                 tableBodyHTML += "<td>%s</td>"%(str(i))
@@ -14,7 +14,7 @@ def RenderHTMLTable(dctTableBody, lstTableHead):
                 tableBodyHTML += "<td> </td>"
         tableBodyHTML += "</tr>"
     tableBodyHTML += "</tbody>"
-    tableHTML = "<div class='table-scroll table-wrap'><table class='main-table' border='1'>%s</table></div>"%(tableHeadHTML + tableBodyHTML)
+    tableHTML = """<div class='table-scroll table-wrap'><table class='main-table' border='1'>%s</table></div>"""%(tableHeadHTML + tableBodyHTML)
 
     return tableHTML
 
@@ -33,11 +33,12 @@ def RenderHTMlSelector(name, lstOption):
     return form
 
 def CourseInfoHTML(dctCourseInfo):
-    infoHTML = """<ul>
+    infoHTML = """<div>
+    <ul>
     <li>CourseID: %s</li>
     <li>Number of student: %d</li>
     <li>Last update: </li>
     <li>Lecturer : </li>
-    </ul>
+    </ul></div>
     """%(dctCourseInfo["ID"], dctCourseInfo["numStd"])
     return infoHTML

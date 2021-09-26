@@ -8,6 +8,9 @@ from function.ChartData import ChartData
 
 apiMain = flask.Flask(__name__)
 apiMain.config["DEBUG"] = True
+apiMain.config["CACHE_TYPE"] = "null"
+apiMain.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
 
 data = None
 PATH_LogFile = None
@@ -81,6 +84,7 @@ def SetStandard():
 @apiMain.route("/dashboard", methods=['GET'])
 def Dashboard(filename, lstObject):
     global data
+    os.system('rm /home/vlu-fit/NCKH/static/*.jpeg')
     chartGener = ChartData(data.loc[data["ID"].notnull()])
 
     infoHTML = ""
@@ -92,8 +96,8 @@ def Dashboard(filename, lstObject):
         dct = {}
         for i in range(len(lst)):
             dct[lst[i]] = [round((lstDone[i]/ (lstDone[i] + lstNotDone[i]))*100, 2)]
-        infoHTML +=  "<td>%s</td>" %RenderToHTML.RenderHTMLTable(dct, ["Name", "%"])
-        chartHTML += "<td><img src='%s' alt='%s'></td>"%("../static/"+ imgName, imgName)
+        infoHTML +=  "<td>%s</td>" %RenderToHTML.RenderHTMLTable(dct, [typename, "%"])
+        chartHTML += "<td><img src='%s' alt='%s'></td>"%("./static/"+ imgName, imgName)
 
     lstStudent = data["ID"].unique().tolist()
     dctCourseInfo = {"ID":filename.replace(".csv", ""), "numStd":len(lstStudent)}

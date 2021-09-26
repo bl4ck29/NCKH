@@ -1,4 +1,4 @@
-import pandas, datetime, os, numpy
+import pandas, datetime, os, numpy, datetime
 import matplotlib.pyplot as plt
 from function import DataFrameFunction, ConfigParser
 
@@ -34,7 +34,7 @@ class ChartData:
         fig, ax = plt.subplots()
         ax.pie(sizes, labels=labels, autopct="%1.1f%%", startangle=90)
         ax.axis("equal")
-        FILENAME = "ComponentPieChart.jpeg"
+        FILENAME = "ComponentPieChart_%s.jpeg"%str(datetime.datetime.now())
         plt.savefig(self.PATH + FILENAME)
         return FILENAME
     
@@ -55,7 +55,7 @@ class ChartData:
         plt.plot(list(dctResult.keys()), list(dctResult.values()))
         plt.xticks(rotation=90)
         plt.title("Event chart")
-        FILENAME = "ProcessLineChart.jpeg"
+        FILENAME = "ProcessLineChart_%s.jpeg"%str(datetime.datetime.now())
         plt.savefig(self.PATH + FILENAME)
         return FILENAME
 
@@ -84,7 +84,7 @@ class ChartData:
         ax.bar_label(p1, label_type="center")
         ax.bar_label(p2, label_type="center")
 
-        plt.xticks(rotation=90)
-        FILENAME = typename + "StackBarChar.jpeg"
+        plt.xticks(rotation=45)
+        FILENAME = typename + "StackBarChar_%s.jpeg"%str(datetime.datetime.now())
         plt.savefig(self.PATH + FILENAME)
         return FILENAME
