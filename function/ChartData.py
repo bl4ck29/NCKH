@@ -1,6 +1,7 @@
 import pandas, datetime, os, numpy, datetime
 import matplotlib.pyplot as plt
 from function import DataFrameFunction, ConfigParser
+from textwrap import wrap
 
 class ChartData:
     def __init__(self, dfData, stdID=None):
@@ -73,18 +74,21 @@ class ChartData:
     
     def StackBarChart(self, typename):
         done , notdone, lst = self.StackBarChartData(typename)
-        fig, ax = plt.subplots(figsize=(18, 10))
-        p1 = ax.bar(lst, done, 0.35, label="Done")
-        p2 = ax.bar(lst, notdone, 0.35,bottom=done, label="NotDone")
+        fig, ax = plt.subplots(figsize=(13, 20))
+        labels = [ '\n'.join(wrap(l, 20)) for l in lst ]
 
-        ax.set_ylabel("Number of students")
-        ax.set_xticks(numpy.arange(len(lst)))
-        ax.set_xticklabels(lst)
+        p1 = ax.barh(labels, done, 0.35, label="Done")
+        p2 = ax.barh(labels, notdone, 0.35, left=done, label="NotDone")
+
+        # ax.set_ylabel("Number of students")
+        # ax.set_xticks(numpy.arange(len(labels)))
+        # ax.set_xticklabels(labels, rotation = 90, fontsize = 7)
+        # ax.set_xticklabels(labels)
         ax.legend()
-        ax.bar_label(p1, label_type="center")
-        ax.bar_label(p2, label_type="center")
+        ax.bar_label(p1, label_type="center", padding=3)
+        ax.bar_label(p2, label_type="center", padding=3)
 
-        plt.xticks(rotation=45)
+        plt.tight_layout()
         FILENAME = typename + "StackBarChar_%s.jpeg"%str(datetime.datetime.now())
         plt.savefig(self.PATH + FILENAME)
         return FILENAME

@@ -145,3 +145,7 @@
 .overview {
     display: flex;
 }
+
+.chart-image {
+    width: 70%
+}

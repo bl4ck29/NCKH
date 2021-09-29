@@ -97,7 +97,7 @@ def Dashboard(filename, lstObject):
         for i in range(len(lst)):
             dct[lst[i]] = [round((lstDone[i]/ (lstDone[i] + lstNotDone[i]))*100, 2)]
         infoHTML +=  "<td>%s</td>" %RenderToHTML.RenderHTMLTable(dct, [typename, "%"])
-        chartHTML += "<td><img src='%s' alt='%s'></td>"%("./static/"+ imgName, imgName)
+        chartHTML += "<td><a href='%s' target='blank'><img class='chart-image' src='%s' alt='%s'></a></td>"%("./static/"+ imgName, "./static/"+ imgName, imgName)
 
     lstStudent = data["ID"].unique().tolist()
     dctCourseInfo = {"ID":filename.replace(".csv", ""), "numStd":len(lstStudent)}

@@ -6,12 +6,12 @@ def RenderHTMLTable(dctTableBody, lstTableHead):
 
     tableBodyHTML = "<tbody>"
     for key, value in dctTableBody.items():
-        tableBodyHTML += "<tr><td>%s</td>"%(key)
+        tableBodyHTML += "<tr><td class='col-3'>%s</td>"%(key)
         for i in value:
             if i:
-                tableBodyHTML += "<td>%s</td>"%(str(i))
+                tableBodyHTML += "<td class='col-1'>%s</td>"%(str(i))
             else:
-                tableBodyHTML += "<td> </td>"
+                tableBodyHTML += "<tdclass='col-1'> </tdclass=>"
         tableBodyHTML += "</tr>"
     tableBodyHTML += "</tbody>"
     tableHTML = """<div class='table-scroll table-wrap'><table class='main-table' border='1'>%s</table></div>"""%(tableHeadHTML + tableBodyHTML)
