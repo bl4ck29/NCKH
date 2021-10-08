@@ -1,4 +1,6 @@
 def RenderHTMLTable(dctTableBody, lstTableHead):
+    if len(dctTableBody) == 0:
+        return """<div class='table-scroll table-wrap'><table class='main-table' border='1'></table></div>"""
     tableHeadHTML = "<thead><tr>"
     for label in lstTableHead:
         tableHeadHTML += "<td><h3>%s</h3></td>" % (label)
@@ -37,8 +39,8 @@ def CourseInfoHTML(dctCourseInfo):
     <ul>
     <li>CourseID: %s</li>
     <li>Number of student: %d</li>
-    <li>Last update: </li>
-    <li>Lecturer : </li>
+    <li>Last update: %s</li>
+    <li>Lecturer : %s</li>
     </ul></div>
-    """%(dctCourseInfo["ID"], dctCourseInfo["numStd"])
+    """%(dctCourseInfo["ID"], dctCourseInfo["numStd"], str(dctCourseInfo["lastUpdate"]), ", ".join(dctCourseInfo["lectures"]))
     return infoHTML

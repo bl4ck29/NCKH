@@ -16,18 +16,18 @@
             </div>
             <div class="course-info">
                 {{course_info|safe}}
+                <div class="student">
+                    <form action="http://127.0.0.1:5000/submit" method="POST">
+                        <label for="object">Select object: </label>
+                        <select name="student">
+                        {% for obj in lstObj %}
+                        <option value={{obj}} selected>{{obj}}</option>
+                        {% endfor %}
+                    </select>
+                        <input type="submit">
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="student">
-            <form action="http://127.0.0.1:5000/submit" method="POST">
-                <label for="object">Select object: </label>
-                <select name="student">
-                {% for obj in lstObj %}
-                <option value={{obj}} selected>{{obj}}</option>
-                {% endfor %}
-            </select>
-                <input type="submit">
-            </form>
         </div>
     </section>
 

@@ -34,6 +34,7 @@ class ChartData:
         labels = list(dct.keys())
         fig, ax = plt.subplots()
         ax.pie(sizes, labels=labels, autopct="%1.1f%%", startangle=90)
+        ax.set_title("Distrabution of components", pad=14)
         ax.axis("equal")
         FILENAME = "ComponentPieChart_%s.jpeg"%str(datetime.datetime.now())
         plt.savefig(self.PATH + FILENAME)
@@ -87,6 +88,7 @@ class ChartData:
         ax.legend()
         ax.bar_label(p1, label_type="center", padding=3)
         ax.bar_label(p2, label_type="center", padding=3)
+        ax.set_title("Number of student Done and NOT DONE "+ typename, pad=-14)
 
         plt.tight_layout()
         FILENAME = typename + "StackBarChar_%s.jpeg"%str(datetime.datetime.now())

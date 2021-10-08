@@ -2,7 +2,7 @@ import flask
 import pandas
 import subprocess
 import os
-from flask import request, redirect, url_for, render_template, jsonify
+from flask import request, redirect, url_for, render_template
 from function import OverviewTable, DataFrameFunction, ScorebyEventName, ConfigParser, RenderToHTML
 from function.ChartData import ChartData
 
@@ -92,7 +92,6 @@ def Dashboard(filename, lstObject):
     for typename in ["File", "Assignment" ,"Quiz"]:
         lstDone, lstNotDone, lst = chartGener.StackBarChartData(typename)
         imgName = chartGener.StackBarChart(typename)
-        print(imgName)
         dct = {}
         for i in range(len(lst)):
             dct[lst[i]] = [round((lstDone[i]/ (lstDone[i] + lstNotDone[i]))*100, 2)]
@@ -100,7 +99,10 @@ def Dashboard(filename, lstObject):
         chartHTML += "<td><a href='%s' target='blank'><img class='chart-image' src='%s' alt='%s'></a></td>"%("./static/"+ imgName, "./static/"+ imgName, imgName)
 
     lstStudent = data["ID"].unique().tolist()
-    dctCourseInfo = {"ID":filename.replace(".csv", ""), "numStd":len(lstStudent)}
+    lastUpdate = None
+    if len(data):
+        lastUpdate = data.iloc[0, 0]
+    dctCourseInfo = {"ID":filename.replace(".csv", ""), "numStd":len(lstStudent), "lastUpdate":lastUpdate, "lectures":data.loc[data["ID"].isnull()]["Name"].unique().tolist()}
 
     return render_template("Dashboard.html", imgname=chartGener.ComponentPieChart() ,course_info = RenderToHTML.CourseInfoHTML(dctCourseInfo), info=infoHTML, chart=chartHTML, lstObj=lstObject)
 
@@ -131,4 +133,4 @@ def submit():
     else:
         return request.args
 
-apiMain.run()
+apiMain.run(host="0.0.0.0", port=5000)

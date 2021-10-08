@@ -149,3 +149,12 @@
 .chart-image {
     width: 70%
 }
+
+.course-info {
+    font-size: 25px;
+    padding: 50px;
+}
+
+.student {
+    font-size: 30px;
+}
